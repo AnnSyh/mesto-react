@@ -34,14 +34,44 @@ function App() {
     setisImagePopupOpen(true)
   }
 
+  // стэйт для сохранения id открытой карточки
+  const [cardIndex, setCardIndex] = useState({});
+
   //открываем попап с картинкой
-  const [selectedCard, setSelectedCard] = useState({}); 
+  const [selectedCard, setSelectedCard] = useState({});
+
   const handleCardClick = (card) => {
+
+console.log('card = ',card);
+
     setSelectedCard(card)       //передаем  данные карточки
+    setCardIndex(card.cardIndex) //пердаем cardIndex открытой карточки
     setisImagePopupOpen(true)   //открываем попап скартинкой
     componentDidMount()         //устанавливаем событие при нажатии клавиши Esc
     // document.querySelector('.open-img__popup').classList.add('popup_opened');
   };
+
+// -----------------------------
+
+//Переключение картинок в 'слаедере'
+
+const handleRightArrowClick = (card) => {
+  debugger
+
+  console.log('card = ', card);
+  console.log('card.parent = ', card.parent);
+  console.log('handleRightArrowClick: cardIndex = ', cardIndex);
+  let newCardIndex = cardIndex + 1;
+  console.log('newCardIndex = ',newCardIndex);
+  setCardIndex(card.newCardIndex);
+  
+
+}
+const handleLeftArrowClick = () => {
+  console.log('handleLeftArrowClick');
+}
+
+// --------------------------------
 
    //закрываем попап с картинкой
   const closeAllPopups = () => {
@@ -68,6 +98,10 @@ function App() {
   }
 
 
+
+
+
+
   return (
     <>
       <Header />
@@ -87,6 +121,10 @@ function App() {
               isOpen={isImagePopupOpen} 
               name={selectedCard.name} 
               link={selectedCard.link}
+              id={selectedCard.id}
+              cardIndex={selectedCard.cardIndex}
+              handleRightArrowClick={handleRightArrowClick}
+              handleLeftArrowClick={handleLeftArrowClick}
               />
 
 {/* попап Редактировать профиль */}

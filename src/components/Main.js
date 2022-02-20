@@ -31,18 +31,26 @@ const [userAvatar, setUserAvatar] = useState(avatar);
 
 const [cards , setCards ] = useState([]);
 
+
     useEffect(() => {
   
       api.getInitialCards()
         .then((cards) => {
-            // console.log('cards = ',cards)
+            console.log('cards = ',cards)
             setCards(cards);
         })
         .catch((err) => console.log(err));
   
     }, []);    
 
+    //заводим индекс карточки для слайдера
+    let countCard = 0;
+    cards.forEach(card => {
+        countCard = countCard + 1;
+        card.cardIndex = countCard
+    });
 
+    
 
   return (
     <>

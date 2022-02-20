@@ -1,0 +1,29 @@
+.popup__arrow-right{
+  position: absolute;
+  top: calc(50% - 16px);
+  right: -43px;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  z-index: 101;
+  background: transparent;
+  border: none;
+}
+.popup__arrow-right::after,
+.popup__arrow-right::before {
+    content: "";
+    width: 27px;
+    height:3px;
+    background: #fff;
+    position: absolute;
+    top: 45%;
+    right: 0;
+}
+.popup__arrow-right::after {
+    transform: rotate(45deg);
+    top: -3px;
+}
+
+.popup__arrow-right::before {
+    transform: rotate(-45deg);
+}
