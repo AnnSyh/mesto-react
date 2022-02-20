@@ -5,17 +5,16 @@ import Button from './button';
 import api from  '../utils/api.js';
 import Card from './Card';
 
-function Main({
-                handleEditAvatarClick, 
-                handleEditProfileClick, 
-                handleAddPlaceClick,
-                handleCardClick
-            }) {
+
+function Main(props) {
+
+    function handleCards(cards) {
+        props.handleCards(cards);
+      }  
 
 const [userName, setUserName] = useState('Имя пользователя');
 const [userDescription, setUserDescription] = useState('О пользователе');
 const [userAvatar, setUserAvatar] = useState(avatar);
-  
     useEffect(() => {
 
       api.getUser()
@@ -30,13 +29,10 @@ const [userAvatar, setUserAvatar] = useState(avatar);
     }, []);
 
 const [cards , setCards ] = useState([]);
-
-
     useEffect(() => {
-  
       api.getInitialCards()
         .then((cards) => {
-            console.log('cards = ',cards)
+            // console.log('cards = ',cards)
             setCards(cards);
         })
         .catch((err) => console.log(err));
@@ -50,8 +46,6 @@ const [cards , setCards ] = useState([]);
         card.cardIndex = countCard
     });
 
-    
-
   return (
     <>
         <section className="profile section content__section">
@@ -62,7 +56,7 @@ const [cards , setCards ] = useState([]);
                         alt="аватар" />
                     <Button title="" 
                             btnClass="profile__btn profile__btn_user-edit profile__btn_avatar-edit  link-hover" 
-                            handleClick={handleEditAvatarClick}/>
+                            handleClick={props.handleEditAvatarClick}/>
                 </div>
 
                 <div className="profile__info">
@@ -71,7 +65,7 @@ const [cards , setCards ] = useState([]);
 
                         <Button title="" 
                                 btnClass="profile__btn profile__btn_user-edit btn-user-edit link-hover" 
-                                handleClick={handleEditProfileClick}/>
+                                handleClick={props.handleEditProfileClick}/>
                     </div>
                     <p className="profile__job text-overflow">{userDescription}</p>
                 </div>
@@ -80,20 +74,23 @@ const [cards , setCards ] = useState([]);
 
             <Button title="+" 
                     btnClass="profile__btn profile__btn_user-add link-hover" 
-                    handleClick={handleAddPlaceClick}/>
+                    handleClick={props.handleAddPlaceClick}/>
         </section>
 
-        <section className="cards section content__section ">
+        <section className="cards section content__section">
             <div className="list-template-inner">
                 <ul className="cards__list list-template-place">
                     {cards.map(({ _id, ...card }) => {
                         return (
                         <Card   key={_id} 
-                                handleCardClick={() => handleCardClick(card)} 
+                                handleCardClick={() => props.handleCardClick(card)} 
                                 {...card} 
+                                handleCards={handleCards(cards)}
                         />
                             );
-                    })}
+                    })
+                    
+                    }
                 </ul>
             </div>
         </section>

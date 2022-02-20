@@ -34,39 +34,65 @@ function App() {
     setisImagePopupOpen(true)
   }
 
-  // стэйт для сохранения id открытой карточки
+  // стэйт для сохранения индекса карточки
   const [cardIndex, setCardIndex] = useState({});
 
   //открываем попап с картинкой
   const [selectedCard, setSelectedCard] = useState({});
 
   const handleCardClick = (card) => {
-
-console.log('card = ',card);
-
     setSelectedCard(card)       //передаем  данные карточки
-    setCardIndex(card.cardIndex) //пердаем cardIndex открытой карточки
     setisImagePopupOpen(true)   //открываем попап скартинкой
     componentDidMount()         //устанавливаем событие при нажатии клавиши Esc
     // document.querySelector('.open-img__popup').classList.add('popup_opened');
+    
   };
 
 // -----------------------------
 
-//Переключение картинок в 'слаедере'
-
-const handleRightArrowClick = (card) => {
-  debugger
-
-  console.log('card = ', card);
-  console.log('card.parent = ', card.parent);
-  console.log('handleRightArrowClick: cardIndex = ', cardIndex);
-  let newCardIndex = cardIndex + 1;
-  console.log('newCardIndex = ',newCardIndex);
-  setCardIndex(card.newCardIndex);
-  
-
+const selectedCardOne =  {
+  cardIndex: 10,
+  likes: Array(3), 
+  name: 'hitman', 
+  link: 'https://cdnimg.rg.ru/img/content/167/49/21/Hitman_1000_d_850.jpg', 
+  owner: {
+    about: "Physicist and Chemist55",
+    avatar: "https://bitrafmix.com/data/images/en/30.jpg",
+    cohort: "cohort-34",
+    name: "Test 155799",
+    _id: "977e2691ed8b03b2e627a13e",
+  }, 
 }
+
+const handleCards = (cards) => {
+  // console.log('App: cards = ',cards)
+  return cards
+}
+console.log('handleRightArrowClick: cards = ',handleCards)
+
+//Переключение картинок в 'слайдере'
+const handleRightArrowClick = () => {
+  // debugger
+  console.log('selectedCard = ', selectedCard);
+  console.log('cardIndex = ', selectedCard.cardIndex);
+  let newCardIndex = selectedCard.cardIndex + 1;
+  console.log('newCardIndex = ', newCardIndex);
+  //вытащить карточку по newCardIndex из массива и передать setSelectedCard()
+
+  // console.log('handleRightArrowClick: cards = ',cards)
+
+  // cards.forEach(card => {
+  //   if(card.cardIndex == newCardIndex){
+  //     console.log('newCardIndex: card = ',card)
+  //     setSelectedCard(card)
+  //   }
+  // });
+
+  // 
+  setSelectedCard(selectedCardOne)
+  
+}
+
 const handleLeftArrowClick = () => {
   console.log('handleLeftArrowClick');
 }
@@ -99,9 +125,6 @@ const handleLeftArrowClick = () => {
 
 
 
-
-
-
   return (
     <>
       <Header />
@@ -112,6 +135,7 @@ const handleLeftArrowClick = () => {
                   handleConfirmClick={handleConfirmClick}
                   handleImagePopupOpen={handleImagePopupOpen}
                   handleCardClick={handleCardClick}
+                  handleCards={handleCards}
         />
       </main>
 
